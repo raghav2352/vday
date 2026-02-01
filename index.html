@@ -1,5 +1,6 @@
 <html>
     <body>
+        <div class="heart-bg" id="heartContainer"></div>
         <div>
             <br/>
             <br/>
@@ -47,6 +48,23 @@
                 height: 40px;
                 color: #fff;
             }
+            .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.7;
+            animation: float 5s linear infinite;
+            user-select: none; 
+        }
+            .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+            overflow: hidden;
+        }
         </style>
         <script>
             document.getElementById("yesButton").addEventListener("click", showAlert);
@@ -58,6 +76,38 @@
                 no.style.display = "none";
             
             }
+                function createHeart() {
+                const container = document.getElementById('heartContainer');
+                const heart = document.createElement('div');
+                
+                // 1. Array of cute Valentine colors
+                const colors = ['#ff477e', '#ff70a6', '#ff0a54', '#f5cac3', '#ffffff', '#ff85a1'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+                
+                // 2. Set random position and style
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.color = randomColor;
+                
+                // 3. Randomize size so some look further away
+                const size = Math.random() * 20 + 10 + 'px';
+                heart.style.fontSize = size;
+                
+                // 4. Randomize speed
+                heart.style.animationDuration = Math.random() * 3 + 3 + 's'; 
+                
+                container.appendChild(heart);
+
+                // Clean up hearts after they float off screen
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }
+
+            // Start the heart shower!
+            setInterval(createHeart, 300);
 
             var yesButton = document.getElementById("yesButton");
             var no = document.getElementById("no");
